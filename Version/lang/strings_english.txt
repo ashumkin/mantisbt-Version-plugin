@@ -1,0 +1,9 @@
+<?php
+
+# Copyright (c) 2011 Alexey Shumkin
+# Licensed under the GNU license
+
+$s_plugin_Version_ = '';
+$s_plugin_Version_title = 'Version autoincrement';
+$s_plugin_Version_description = 'Automatically creates next version.';
+$s_plugin_Version_version_title = 'Versions';
