@@ -20,8 +20,28 @@ class VersionPlugin extends MantisPlugin {
 	public function hooks() {
 		return array(
 		    'EVENT_MANAGE_VERSION_UPDATE_FORM' => 'next',
+		    'EVENT_MANAGE_VERSION_UPDATE' => 'version_updated',
 		    'EVENT_MENU_MANAGE' => 'menu_manage',
 		);
+	}
+
+	public function version_updated($event, $version_id) {
+			form_security_purge( 'manage_proj_ver_update' );
+			$t_redirect_url = plugin_page('manage', true);
+			html_page_top( null, $t_redirect_url );
+			?>
+<br />
+<div align="center">
+<?php
+		echo lang_get( 'operation_successful' ) . '<br />';
+
+		print_bracket_link( $t_redirect_url, lang_get( 'proceed' ) );
+?>
+</div>
+
+<?php
+		html_page_bottom();
+		exit;
 	}
 
 	public function next($event, $version_id) {
