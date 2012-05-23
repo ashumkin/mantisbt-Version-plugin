@@ -53,8 +53,8 @@ $f_project_id = helper_get_current_project();
 		} else {
 			$t_inherited = false;
 		}
-
-		$t_name = version_full_name( $t_version['id'], /* showProject */ $t_inherited, $f_project_id );
+		$t_version_id = $t_version['id'];
+		$t_name = prepare_version_string( $f_project_id, $t_version_id, true, false);
 
 		$t_released = $t_version['released'];
 		$t_obsolete = $t_version['obsolete'];
@@ -67,7 +67,7 @@ $f_project_id = helper_get_current_project();
 <!-- Repeated Info Rows -->
 		<tr <?php echo helper_alternate_class() ?>>
 			<td>
-				<?php echo string_display( $t_name ) ?>
+				<?php echo $t_name ?>
 			</td>
 			<td class="center">
 				<?php echo trans_bool( $t_released ) ?>
@@ -80,9 +80,7 @@ $f_project_id = helper_get_current_project();
 			</td>
 			<td class="center">
 				<?php
-					$t_version_id = version_get_id( $t_name, $f_project_id );
-
-					if ( !$t_inherited ) {
+					if ( ! $t_inherited ) {
 						print_button( 'manage_proj_ver_edit_page.php?version_id=' . $t_version_id, lang_get( 'edit_link' ) );
 						echo '&#160;';
 						print_button( 'manage_proj_ver_delete.php?version_id=' . $t_version_id, lang_get( 'delete_link' ) );
