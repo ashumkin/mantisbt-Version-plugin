@@ -62,8 +62,22 @@ class VersionPlugin extends MantisPlugin {
 		exit;
 	}
 
+	protected function get_next_by_name($version) {
+		$t_version = plugin_version_array( $version );
+		# increment version last token
+		$t_version[count( $t_version ) - 1]++;
+		return implode(".", $t_version);
+	}
+
+	protected function get_next_by_id($version_id) {
+		$t_version = version_get( $version_id );
+		$t_version->version = $this->get_next_by_name( $t_version->version );
+		return $t_version;
+	}
+
 	public function next($event, $version_id) {
-		echo '<tr><td>next version = '.$version_id[0].'</td></tr>';
+		$t_version = $this->get_next_by_id( $version_id );
+		echo '<tr '.helper_alternate_class().'><td class="category">next version</td><td>'.$t_version->version.'</td></tr>';
 	}
 
 	public function menu_manage($event, $user_id) {
