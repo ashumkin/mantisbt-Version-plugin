@@ -72,5 +72,5 @@ if ( false === $t_version_id ) {
 	die( plugin_lang_get( 'invalid_version' ) );
 }
 $t_version = version_get( $t_version_id );
-$t_predata = event_signal( 'EVENT_VERSION_INCREMENT' , array( 'version' => $t_version ) );
+$t_predata = event_signal( 'EVENT_VERSION_INCREMENT' , $t_version );
 

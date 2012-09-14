@@ -16,8 +16,10 @@ $s_plugin_Version_manage_threshold = 'Manage Threshold';
 $s_plugin_Version_remote_version_update_urls = 'Allowed Addresses';
 $s_plugin_Version_enabled_features = 'Enabled Features';
 $s_plugin_Version_enable_change_target_version_to_next = 'Change target version for unresolved bugs of a releasing version to the next version';
+$s_plugin_Version_increment_date_by_days = 'Increment release date of a next version by N days off today';
 $s_plugin_Version_update_configuration = 'Update Configuration';
 
+$s_plugin_Version_invalid_remote_version_update_url = "Invalid remote host";
 $s_plugin_Version_invalid_project = "Invalid project name";
 $s_plugin_Version_invalid_version = "Invalid version name";
 $s_plugin_Version_description_template = "Description template";

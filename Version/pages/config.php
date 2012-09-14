@@ -51,6 +51,11 @@ $t_version_update_urls = unserialize( plugin_config_get( 'remote_version_update_
 </tr>
 
 <tr <?php echo helper_alternate_class() ?>>
+<td class="category"><?php echo plugin_lang_get( 'increment_date_by_days' ) ?></td>
+<td><input name="increment_date_by_days" size="50" value="<?php echo string_attribute( plugin_config_get( 'increment_date_by_days' ) ) ?>"/></td>
+</tr>
+
+<tr <?php echo helper_alternate_class() ?>>
 <td class="category"><?php echo plugin_lang_get( 'description_template' ) ?></td>
 <td><textarea name="description_template" rows="8" cols="50"><?php
 	echo string_textarea( plugin_config_get( 'description_template' ) );

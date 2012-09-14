@@ -32,7 +32,8 @@ class VersionPlugin extends MantisPlugin {
 			'update_threshold'	=> UPDATER,
 			'manage_threshold'	=> ADMINISTRATOR,
 			'enable_change_target_version_to_next' => OFF,
-			'description_template' => '$[future ]release ${version}'
+			'description_template' => '$[future ]release ${version}',
+			'increment_date_by_days' => 1
 		);
 	}
 
@@ -41,13 +42,34 @@ class VersionPlugin extends MantisPlugin {
 		    'EVENT_MANAGE_VERSION_UPDATE_FORM' => 'next',
 		    'EVENT_MANAGE_VERSION_UPDATE' => 'version_updated',
 		    'EVENT_MENU_MANAGE' => 'menu_manage',
-			'EVENT_VERSION_INCREMENT' => 'inc_version'
+			'EVENT_VERSION_INCREMENT' => 'release_inc_version'
 		);
 	}
 
-	public function inc_version($p_event, $p_version) {
-		$version = null;
-		return $version;
+	protected function release_version($p_version) {
+		$p_version->released = VERSION_RELEASED;
+		$p_version->date_order = time();
+		version_update($p_version);
+	}
+
+	public function release_inc_version($p_event, $p_version) {
+		$t_version = $p_version->version;
+		echo "Incrementing version: ".$t_version;
+		$t_version = $this->get_next_by_name( $t_version );
+		echo " -> ".$t_version."\n";
+		if (!version_is_unique( $t_version, $p_version->project_id )) {
+			echo $t_version.": ".error_string(ERROR_VERSION_DUPLICATE);
+		} else {
+			# release version only if next does not exist
+			$this->release_version($p_version);
+
+			$p_version->version = $t_version;
+			$p_version->date_order = time() + 24 * 60 * 60 * plugin_config_get('increment_date_by_days');
+			$t_description = plugin_config_get('description_template');
+			version_add( $p_version->project_id, $p_version->version, VERSION_FUTURE,
+				$t_description, $p_version->date_order );
+		}
+		return $p_version;
 	}
 
 	public function version_updated($event, $version_id) {
