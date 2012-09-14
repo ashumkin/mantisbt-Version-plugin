@@ -40,7 +40,13 @@ class VersionPlugin extends MantisPlugin {
 		    'EVENT_MANAGE_VERSION_UPDATE_FORM' => 'next',
 		    'EVENT_MANAGE_VERSION_UPDATE' => 'version_updated',
 		    'EVENT_MENU_MANAGE' => 'menu_manage',
+			'EVENT_VERSION_INCREMENT' => 'inc_version'
 		);
+	}
+
+	public function inc_version($p_event, $p_version) {
+		$version = null;
+		return $version;
 	}
 
 	public function version_updated($event, $version_id) {

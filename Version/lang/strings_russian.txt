@@ -18,3 +18,5 @@ $s_plugin_Version_enabled_features = 'Включённые функции';
 $s_plugin_Version_enable_change_target_version_to_next = 'Изменить целевую версию нерешённых инцидентов на следующую';
 $s_plugin_Version_update_configuration = 'Обновить настройки';
 
+$s_plugin_Version_invalid_project = "Неверное имя проекта";
+$s_plugin_Version_invalid_version = "Неверная версия";
