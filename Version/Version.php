@@ -31,7 +31,8 @@ class VersionPlugin extends MantisPlugin {
 			'remote_version_update_urls' => serialize( array( 'localhost' ) ),
 			'update_threshold'	=> UPDATER,
 			'manage_threshold'	=> ADMINISTRATOR,
-			'enable_change_target_version_to_next' => OFF
+			'enable_change_target_version_to_next' => OFF,
+			'description_template' => '$[future ]release ${version}'
 		);
 	}
 

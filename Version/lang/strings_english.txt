@@ -20,3 +20,6 @@ $s_plugin_Version_update_configuration = 'Update Configuration';
 
 $s_plugin_Version_invalid_project = "Invalid project name";
 $s_plugin_Version_invalid_version = "Invalid version name";
+$s_plugin_Version_description_template = "Description template";
+$s_plugin_Version_description_template_info = '<span class="small">Predefined variables:<br />${version} - version<br />$[some_text] - "some_text" will be removed in a released version</span>';
+

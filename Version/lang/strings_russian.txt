@@ -20,3 +20,5 @@ $s_plugin_Version_update_configuration = 'Обновить настройки';
 
 $s_plugin_Version_invalid_project = "Неверное имя проекта";
 $s_plugin_Version_invalid_version = "Неверная версия";
+$s_plugin_Version_description_template = "Шаблон описания";
+$s_plugin_Version_description_template_info = '<span class="small">Предопределённые переменные:<br />${version} - версия<br />$[какой_то_текст] - "какой_то_текст" будет убран в выпущенной версии</span>';

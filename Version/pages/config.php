@@ -51,6 +51,14 @@ $t_version_update_urls = unserialize( plugin_config_get( 'remote_version_update_
 </tr>
 
 <tr <?php echo helper_alternate_class() ?>>
+<td class="category"><?php echo plugin_lang_get( 'description_template' ) ?></td>
+<td><textarea name="description_template" rows="8" cols="50"><?php
+	echo string_textarea( plugin_config_get( 'description_template' ) );
+?></textarea><br/>
+<?php echo plugin_lang_get( 'description_template_info' ) ?></td>
+</tr>
+
+<tr <?php echo helper_alternate_class() ?>>
 <td class="category"><?php echo plugin_lang_get( 'remote_version_update_urls' ) ?></td>
 <td><textarea name="remote_version_update_urls" rows="8" cols="50"><?php
 foreach( $t_version_update_urls as $t_ip ) {
