@@ -5,5 +5,16 @@
 
 $s_plugin_Version_ = '';
 $s_plugin_Version_title = 'Автоматический увеличитель номера версии';
-$s_plugin_Version_description = 'Автоматизированно создаёт следующую версию продукта';
+$s_plugin_Version_description = 'Помечает версию выпущенной и автоматически создаёт следующую по шаблону. Также может менять целевую версию нерешённых инцидентов на следующую.';
 $s_plugin_Version_version_title = 'Управление версиями';
+
+$s_plugin_Version_configuration = 'Настройки';
+$s_plugin_Version_api_key = 'Ключ API';
+$s_plugin_Version_api_key_info = '<span class="small">Это секретный пароль, используемый службами, инициирующими обновление версии.<br/>Для его генерации случайного ключа запустите  <code>openssl rand -hex 12</code> или что-нибудь вроде того.</span>';
+$s_plugin_Version_update_threshold = 'Уровень обновления';
+$s_plugin_Version_manage_threshold = 'Уровень управления';
+$s_plugin_Version_remote_version_update_urls = 'Адреса';
+$s_plugin_Version_enabled_features = 'Включённые функции';
+$s_plugin_Version_enable_change_target_version_to_next = 'Изменить целевую версию нерешённых инцидентов на следующую';
+$s_plugin_Version_update_configuration = 'Обновить настройки';
+
