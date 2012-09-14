@@ -1,9 +1,20 @@
 <?php
 
-# Copyright (c) 2011 Alexey Shumkin
+# Copyright (c) 2012 Alexey Shumkin
 # Licensed under the GNU license
 
 $s_plugin_Version_ = '';
 $s_plugin_Version_title = 'Version autoincrement';
-$s_plugin_Version_description = 'Automatically creates next version.';
+$s_plugin_Version_description = 'Marks a version as a release and automatically creates next version by template. Also can change target version of unresolved bugs to the next version.';
 $s_plugin_Version_version_title = 'Versions';
+
+$s_plugin_Version_configuration = 'Configuration';
+$s_plugin_Version_api_key = 'API Key';
+$s_plugin_Version_api_key_info = '<span class="small">This is a secret password to be used by services initiating version update in Mantis.<br/>To generate a random key, run <code>openssl rand -hex 12</code> or similar.</span>';
+$s_plugin_Version_update_threshold = 'Update Threshold';
+$s_plugin_Version_manage_threshold = 'Manage Threshold';
+$s_plugin_Version_remote_version_update_urls = 'Allowed Addresses';
+$s_plugin_Version_enabled_features = 'Enabled Features';
+$s_plugin_Version_enable_change_target_version_to_next = 'Change target version for unresolved bugs of a releasing version to the next version';
+$s_plugin_Version_update_configuration = 'Update Configuration';
+

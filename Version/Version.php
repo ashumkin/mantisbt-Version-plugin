@@ -1,6 +1,6 @@
 <?php
 
-# Copyright (c) 2011 Alexey Shumkin
+# Copyright (c) 2012 Alexey Shumkin
 # Licensed under the GNU license
 
 class VersionPlugin extends MantisPlugin {
@@ -15,6 +15,24 @@ class VersionPlugin extends MantisPlugin {
 
 		$this->author = 'Alexey Shumkin';
 		$this->contact = 'Alex.Crezoff@gmail.com';
+		$this->url = 'http://github.com/ashumkin';
+		$this->page = 'config';
+	}
+
+	public function events() {
+		return array(
+			'EVENT_VERSION_INCREMENT' => EVENT_TYPE_CHAIN
+		);
+	}
+
+	public function config() {
+		return array(
+			'api_key' => '',
+			'remote_version_update_urls' => serialize( array( 'localhost' ) ),
+			'update_threshold'	=> UPDATER,
+			'manage_threshold'	=> ADMINISTRATOR,
+			'enable_change_target_version_to_next' => OFF
+		);
 	}
 
 	public function hooks() {
