@@ -57,7 +57,7 @@ class VersionPlugin extends MantisPlugin {
 	protected function release_version($p_version, $p_description_template) {
 		// do not modify version if it is already released
 		if ( $p_version->released == VERSION_RELEASED ) {
-			echo 'Version '.$p_version->version.' already released';
+			echo 'Version '.$p_version->version." already released\n";
 			return;
 		}
 		$p_version->released = VERSION_RELEASED;
@@ -72,6 +72,28 @@ class VersionPlugin extends MantisPlugin {
 		version_update( $p_version );
 	}
 
+	protected function get_unresolved_bugs($p_version) {
+		$t_page_number = 1;
+		$t_per_page = -1;
+		$t_page_count = 1;
+		$t_bug_count = 0;
+		echo "Getting unresolved bugs...\n";
+		$t_filter = array( 'target_version' => array( $p_version ), 'hide_status' => array(RESOLVED) );
+		$t_bugs = filter_get_bug_rows( $t_page_number, $t_per_page, $t_page_count, $t_bug_count, $t_filter );
+		return $t_bugs;
+	}
+
+	protected function move_unresolved_bugs_to_the_next_version($p_version, $p_next) {
+		$t_bugs = $this->get_unresolved_bugs($p_version);
+		if ( count($t_bugs) > 0 ) {
+			foreach($t_bugs as $t_bug) {
+				echo 'Updating bug '.$t_bug->id.' target version to '.$p_next."\n";
+				bug_set_field( $t_bug->id, 'target_version', $p_next );
+				helper_call_custom_function( 'issue_update_notify', array( $t_bug->id ) );
+			}
+		}
+	}
+
 	public function release_inc_version($p_event, $p_version) {
 		$t_version = $p_version->version;
 		$t_version_next = $this->get_next_by_name( $t_version );
@@ -79,6 +101,9 @@ class VersionPlugin extends MantisPlugin {
 		if ( !version_is_unique( $t_version_next, $p_version->project_id ) ) {
 			echo $t_version_next.': '.error_string( ERROR_VERSION_DUPLICATE );
 		} else {
+			if ( ON == plugin_config_get( 'enable_change_target_version_to_next' ) ) {
+				$this->move_unresolved_bugs_to_the_next_version($t_version, $t_version_next);
+			}
 			// release version only if next does not exist
 			$t_description = plugin_config_get( 'description_template' );
 			$this->release_version( $p_version, $t_description );
@@ -86,6 +111,7 @@ class VersionPlugin extends MantisPlugin {
 			$p_version->version = $t_version_next;
 			$p_version->date_order = time() + 24 * 60 * 60 * plugin_config_get( 'increment_date_by_days' );
 			$t_description = $this->process_description( $t_description, $p_version, false );
+			echo 'Adding version '.$t_version_next;
 			version_add( $p_version->project_id, $p_version->version, VERSION_FUTURE,
 				$t_description, $p_version->date_order );
 		}
