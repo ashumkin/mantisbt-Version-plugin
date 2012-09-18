@@ -49,44 +49,44 @@ class VersionPlugin extends MantisPlugin {
 	protected function process_description($p_description, $p_version, $p_for_release) {
 		$t_replacement = $p_for_release ? '' : '\1';
 		// replace "$[some string]" with empty string or "some string" (depending on flag $p_for_release)
-		$t_description = preg_replace('/\$\[([^\[\]]*)\]/', $t_replacement, $p_description);
-		$t_description = preg_replace('/\$\{version\}/', $p_version->version, $t_description);
+		$t_description = preg_replace( '/\$\[([^\[\]]*)\]/', $t_replacement, $p_description );
+		$t_description = preg_replace( '/\$\{version\}/', $p_version->version, $t_description );
 		return $t_description;
 	}
 
 	protected function release_version($p_version, $p_description_template) {
 		// do not modify version if it is already released
-		if ($p_version->released == VERSION_RELEASED) {
+		if ( $p_version->released == VERSION_RELEASED ) {
 			echo 'Version '.$p_version->version.' already released';
 			return;
 		}
 		$p_version->released = VERSION_RELEASED;
 		$p_version->date_order = time();
 		// check whether version description matches our template or not
-		$t_description = $this->process_description($p_description_template, $p_version, false);
+		$t_description = $this->process_description( $p_description_template, $p_version, false );
 		// if matches
-		if ($t_description == $p_version->description) {
+		if ( $t_description == $p_version->description ) {
 			// replace it by template
-			$p_version->description = $this->process_description($p_description_template, $p_version, true);
+			$p_version->description = $this->process_description( $p_description_template, $p_version, true );
 		}
-		version_update($p_version);
+		version_update( $p_version );
 	}
 
 	public function release_inc_version($p_event, $p_version) {
 		$t_version = $p_version->version;
-		echo "Incrementing version: ".$t_version;
+		echo 'Incrementing version: '.$t_version;
 		$t_version = $this->get_next_by_name( $t_version );
-		echo " -> ".$t_version."\n";
-		if (!version_is_unique( $t_version, $p_version->project_id )) {
-			echo $t_version.": ".error_string(ERROR_VERSION_DUPLICATE);
+		echo ' -> '.$t_version."\n";
+		if ( !version_is_unique( $t_version, $p_version->project_id ) ) {
+			echo $t_version.': '.error_string( ERROR_VERSION_DUPLICATE );
 		} else {
 			// release version only if next does not exist
-			$t_description = plugin_config_get('description_template');
-			$this->release_version($p_version, $t_description);
+			$t_description = plugin_config_get( 'description_template' );
+			$this->release_version( $p_version, $t_description );
 
 			$p_version->version = $t_version;
-			$p_version->date_order = time() + 24 * 60 * 60 * plugin_config_get('increment_date_by_days');
-			$t_description = $this->process_description($t_description, $p_version, false);
+			$p_version->date_order = time() + 24 * 60 * 60 * plugin_config_get( 'increment_date_by_days' );
+			$t_description = $this->process_description( $t_description, $p_version, false );
 			version_add( $p_version->project_id, $p_version->version, VERSION_FUTURE,
 				$t_description, $p_version->date_order );
 		}
@@ -95,7 +95,7 @@ class VersionPlugin extends MantisPlugin {
 
 	public function version_updated($event, $version_id) {
 			form_security_purge( 'manage_proj_ver_update' );
-			$t_redirect_url = plugin_page('manage', true);
+			$t_redirect_url = plugin_page( 'manage', true );
 			html_page_top( null, $t_redirect_url );
 			?>
 <br />
@@ -116,7 +116,7 @@ class VersionPlugin extends MantisPlugin {
 		$t_version = plugin_version_array( $version );
 		// increment version last token
 		$t_version[count( $t_version ) - 1]++;
-		return implode(".", $t_version);
+		return implode( '.', $t_version );
 	}
 
 	protected function get_next_by_id($version_id) {
@@ -131,8 +131,8 @@ class VersionPlugin extends MantisPlugin {
 	}
 
 	public function menu_manage($event, $user_id) {
-		$page = plugin_page("manage");
-		$label = plugin_lang_get("version_title");
+		$page = plugin_page( 'manage' );
+		$label = plugin_lang_get( 'version_title' );
 		return "<a href=\"{$page}\">{$label}</a>";
 	}
 
