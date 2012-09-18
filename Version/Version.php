@@ -74,17 +74,16 @@ class VersionPlugin extends MantisPlugin {
 
 	public function release_inc_version($p_event, $p_version) {
 		$t_version = $p_version->version;
-		echo 'Incrementing version: '.$t_version;
-		$t_version = $this->get_next_by_name( $t_version );
-		echo ' -> '.$t_version."\n";
-		if ( !version_is_unique( $t_version, $p_version->project_id ) ) {
-			echo $t_version.': '.error_string( ERROR_VERSION_DUPLICATE );
+		$t_version_next = $this->get_next_by_name( $t_version );
+		echo 'Incrementing version: '.$t_version.' -> '.$t_version_next."\n";
+		if ( !version_is_unique( $t_version_next, $p_version->project_id ) ) {
+			echo $t_version_next.': '.error_string( ERROR_VERSION_DUPLICATE );
 		} else {
 			// release version only if next does not exist
 			$t_description = plugin_config_get( 'description_template' );
 			$this->release_version( $p_version, $t_description );
 
-			$p_version->version = $t_version;
+			$p_version->version = $t_version_next;
 			$p_version->date_order = time() + 24 * 60 * 60 * plugin_config_get( 'increment_date_by_days' );
 			$t_description = $this->process_description( $t_description, $p_version, false );
 			version_add( $p_version->project_id, $p_version->version, VERSION_FUTURE,
