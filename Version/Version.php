@@ -78,7 +78,12 @@ class VersionPlugin extends MantisPlugin {
 		$t_page_count = 1;
 		$t_bug_count = 0;
 		echo "Getting unresolved bugs...\n";
-		$t_filter = array( 'target_version' => array( $p_version ), 'hide_status' => array(RESOLVED) );
+		$t_filter = array(
+			'_view_type' => 'advanced',
+			'project_id' => array( $p_version->project_id ),
+			'target_version' => array( $p_version->version ),
+			'hide_status' => array(RESOLVED)
+		);
 		$t_bugs = filter_get_bug_rows( $t_page_number, $t_per_page, $t_page_count, $t_bug_count, $t_filter );
 		return $t_bugs;
 	}
@@ -102,7 +107,7 @@ class VersionPlugin extends MantisPlugin {
 			echo $t_version_next.': '.error_string( ERROR_VERSION_DUPLICATE );
 		} else {
 			if ( ON == plugin_config_get( 'enable_change_target_version_to_next' ) ) {
-				$this->move_unresolved_bugs_to_the_next_version($t_version, $t_version_next);
+				$this->move_unresolved_bugs_to_the_next_version($p_version, $t_version_next);
 			}
 			// release version only if next does not exist
 			$t_description = plugin_config_get( 'description_template' );
