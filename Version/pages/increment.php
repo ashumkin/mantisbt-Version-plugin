@@ -58,9 +58,15 @@ if ( !$t_valid ) {
 	die( plugin_lang_get( 'invalid_remote_version_update_url' ) );
 }
 
-$f_project_name = gpc_get_string( 'project' );
 $f_version_name = gpc_get_string( 'version' );
-$t_project_id = project_get_id_by_name( $f_project_name );
+$f_encoding = gpc_get_string( 'encoding', 'UTF-8' );
+$t_project_name = gpc_get_string( 'project' );
+if ( $f_encoding ) {
+	if (! $t_project_name = iconv( $f_encoding, 'UTF-8', $t_project_name ) ) {
+		die( plugin_lang_get( 'invalid_project_encoding' ) );
+	}
+}
+$t_project_id = project_get_id_by_name( $t_project_name );
 
 # Project not found
 if ( is_null( $t_project_id ) || $t_project_id == 0 ) {
