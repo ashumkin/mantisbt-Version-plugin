@@ -58,6 +58,7 @@ if ( !$t_valid ) {
 	die( plugin_lang_get( 'invalid_remote_version_update_url' ) );
 }
 
+$f_debug = gpc_get_bool( 'debug', false );
 $f_version_name = gpc_get_string( 'version' );
 $f_encoding = gpc_get_string( 'encoding', 'UTF-8' );
 $t_project_name = gpc_get_string( 'project' );
@@ -78,5 +79,5 @@ if ( false === $t_version_id ) {
 	die( plugin_lang_get( 'invalid_version' ) );
 }
 $t_version = version_get( $t_version_id );
-$t_predata = event_signal( 'EVENT_VERSION_INCREMENT' , $t_version );
+$t_predata = event_signal( 'EVENT_VERSION_INCREMENT', array( $t_version, $f_debug ) );
 
