@@ -82,7 +82,7 @@ while ( count( $t_version_name ) > $t_version_token_count ) {
 $t_version_name = implode( '.', $t_version_name );
 $t_version_id = version_get_id( $t_version_name, $t_project_id );
 if ( false === $t_version_id ) {
-	die( plugin_lang_get( 'invalid_version' ) );
+	die( plugin_lang_get( 'invalid_version' ) . ': '. $t_version_name );
 }
 $t_version = version_get( $t_version_id );
 $t_predata = event_signal( 'EVENT_VERSION_INCREMENT', array( $t_version, $f_debug ) );
