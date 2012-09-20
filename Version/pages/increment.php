@@ -74,7 +74,12 @@ if ( is_null( $t_project_id ) || $t_project_id == 0 ) {
 	die( plugin_lang_get( 'invalid_project' ) );
 }
 
-$t_version_id = version_get_id( $f_version_name, $t_project_id );
+$t_version_name = plugin_version_array( $f_version_name );
+while ( count( $t_version_name ) > 3) {
+	array_pop( $t_version_name );
+}
+$t_version_name = implode( '.', $t_version_name );
+$t_version_id = version_get_id( $t_version_name, $t_project_id );
 if ( false === $t_version_id ) {
 	die( plugin_lang_get( 'invalid_version' ) );
 }
