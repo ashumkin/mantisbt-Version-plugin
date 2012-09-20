@@ -11,6 +11,7 @@ $f_update_threshold = gpc_get_int( 'update_threshold' );
 $f_manage_threshold = gpc_get_int( 'manage_threshold' );
 
 $f_change_target_version_to_next= gpc_get_bool( 'enable_change_target_version_to_next', OFF );
+$f_description_template = gpc_get_string( 'description_template' );
 
 function check_urls( $t_urls_in ) {
 	$t_urls_in = explode( "\n", $t_urls_in );
@@ -45,6 +46,7 @@ maybe_set_option( 'update_threshold', $f_update_threshold );
 maybe_set_option( 'manage_threshold', $f_manage_threshold );
 
 maybe_set_option( 'enable_change_target_version_to_next', $f_change_target_version_to_next );
+maybe_set_option( 'description_template', $f_description_template );
 
 maybe_set_option( 'remote_version_update_urls', serialize( $t_version_update_urls ) );
 
