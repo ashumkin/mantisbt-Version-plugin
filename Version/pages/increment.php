@@ -75,7 +75,8 @@ if ( is_null( $t_project_id ) || $t_project_id == 0 ) {
 }
 
 $t_version_name = plugin_version_array( $f_version_name );
-while ( count( $t_version_name ) > 3) {
+$t_version_token_count = plugin_config_get( 'version_token_count' );
+while ( count( $t_version_name ) > $t_version_token_count ) {
 	array_pop( $t_version_name );
 }
 $t_version_name = implode( '.', $t_version_name );

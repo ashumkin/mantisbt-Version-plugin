@@ -56,6 +56,11 @@ $t_version_update_urls = unserialize( plugin_config_get( 'remote_version_update_
 </tr>
 
 <tr <?php echo helper_alternate_class() ?>>
+<td class="category"><?php echo plugin_lang_get( 'version_token_count' ) ?></td>
+<td><input name="version_token_count" size="50" value="<?php echo string_attribute( plugin_config_get( 'version_token_count' ) ) ?>"/></td>
+</tr>
+
+<tr <?php echo helper_alternate_class() ?>>
 <td class="category"><?php echo plugin_lang_get( 'description_template' ) ?></td>
 <td><textarea name="description_template" rows="8" cols="50"><?php
 	echo string_textarea( plugin_config_get( 'description_template' ) );

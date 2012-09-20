@@ -35,6 +35,7 @@ $t_version_update_urls = check_urls( $f_version_update_urls );
 
 $f_api_key = gpc_get_string( 'api_key' );
 $f_increment_date_by_days = gpc_get_string( 'increment_date_by_days' );
+$f_version_token_count = gpc_get_int( 'version_token_count' );
 
 function maybe_set_option( $name, $value ) {
 	if ( $value != plugin_config_get( $name ) ) {
@@ -52,6 +53,7 @@ maybe_set_option( 'remote_version_update_urls', serialize( $t_version_update_url
 
 maybe_set_option( 'api_key', $f_api_key );
 maybe_set_option( 'increment_date_by_days', $f_increment_date_by_days );
+maybe_set_option( 'version_token_count', $f_version_token_count );
 
 form_security_purge( 'plugin_Version_manage_config' );
 

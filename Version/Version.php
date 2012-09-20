@@ -33,7 +33,8 @@ class VersionPlugin extends MantisPlugin {
 			'manage_threshold'	=> ADMINISTRATOR,
 			'enable_change_target_version_to_next' => OFF,
 			'description_template' => '$[future ]release ${version}',
-			'increment_date_by_days' => 1
+			'increment_date_by_days' => 1,
+			'version_token_count' => 3
 		);
 	}
 

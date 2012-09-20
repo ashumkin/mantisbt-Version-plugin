@@ -17,6 +17,7 @@ $s_plugin_Version_remote_version_update_urls = 'Адреса';
 $s_plugin_Version_enabled_features = 'Включённые функции';
 $s_plugin_Version_enable_change_target_version_to_next = 'Изменить целевую версию нерешённых инцидентов на следующую';
 $s_plugin_Version_increment_date_by_days = 'Установить дату выпуска версии через N дней от сегодняшней';
+$s_plugin_Version_version_token_count = 'Разрядов в имени версии';
 $s_plugin_Version_update_configuration = 'Обновить настройки';
 
 $s_plugin_Version_invalid_remote_version_update_url = 'Недопустимый хост для обновления версии';
