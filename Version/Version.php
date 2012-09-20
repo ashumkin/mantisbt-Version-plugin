@@ -115,7 +115,9 @@ class VersionPlugin extends MantisPlugin {
 	public function release_inc_version($p_event, $p_version, $p_debug) {
 		$t_version = $p_version->version;
 		$t_version_next = $this->get_next_by_name( $t_version );
-		$this->debug = $p_debug;
+		if ( $this->debug = $p_debug ) {
+			echo "DEBUG MODE\n";
+		}
 		echo 'Incrementing version: '.$t_version.' -> '.$t_version_next."\n";
 		if ( !version_is_unique( $t_version_next, $p_version->project_id ) ) {
 			echo $t_version_next.': '.error_string( ERROR_VERSION_DUPLICATE );
