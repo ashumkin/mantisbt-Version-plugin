@@ -78,11 +78,19 @@ class VersionPlugin extends MantisPlugin {
 		$t_page_count = 1;
 		$t_bug_count = 0;
 		echo "Getting unresolved bugs...\n";
+		$t_available_statuses = MantisEnum::getValues( config_get( 'status_enum_string' ) );
+		$t_resolved = config_get( 'bug_resolved_status_threshold' );
+		$t_desired_statuses = array();
+		foreach( $t_available_statuses as $t_available_status ) {
+			if ( $t_resolved > $t_available_status ) {
+				$t_desired_statuses[] = $t_available_status;
+			}
+		}
 		$t_filter = array(
 			'_view_type' => 'advanced',
 			'project_id' => array( $p_version->project_id ),
 			'target_version' => array( $p_version->version ),
-			'hide_status' => array(RESOLVED)
+			'show_status' => $t_desired_statuses
 		);
 		$t_bugs = filter_get_bug_rows( $t_page_number, $t_per_page, $t_page_count, $t_bug_count, $t_filter );
 		return $t_bugs;
