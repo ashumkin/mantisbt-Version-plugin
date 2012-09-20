@@ -69,7 +69,9 @@ class VersionPlugin extends MantisPlugin {
 			// replace it by template
 			$p_version->description = $this->process_description( $p_description_template, $p_version, true );
 		}
-		version_update( $p_version );
+		if ( !$this->debug ) {
+			version_update( $p_version );
+		}
 	}
 
 	protected function get_unresolved_bugs($p_version) {
@@ -101,7 +103,9 @@ class VersionPlugin extends MantisPlugin {
 		if ( count($t_bugs) > 0 ) {
 			foreach($t_bugs as $t_bug) {
 				echo 'Updating bug '.$t_bug->id.' target version to '.$p_next."\n";
-				bug_set_field( $t_bug->id, 'target_version', $p_next );
+				if ( !$this->debug ) {
+					bug_set_field( $t_bug->id, 'target_version', $p_next );
+				}
 				helper_call_custom_function( 'issue_update_notify', array( $t_bug->id ) );
 			}
 		}
@@ -110,6 +114,7 @@ class VersionPlugin extends MantisPlugin {
 	public function release_inc_version($p_event, $p_version) {
 		$t_version = $p_version->version;
 		$t_version_next = $this->get_next_by_name( $t_version );
+		$this->debug = gpc_get_bool( 'debug' );
 		echo 'Incrementing version: '.$t_version.' -> '.$t_version_next."\n";
 		if ( !version_is_unique( $t_version_next, $p_version->project_id ) ) {
 			echo $t_version_next.': '.error_string( ERROR_VERSION_DUPLICATE );
@@ -125,8 +130,10 @@ class VersionPlugin extends MantisPlugin {
 			$p_version->date_order = time() + 24 * 60 * 60 * plugin_config_get( 'increment_date_by_days' );
 			$t_description = $this->process_description( $t_description, $p_version, false );
 			echo 'Adding version '.$t_version_next;
-			version_add( $p_version->project_id, $p_version->version, VERSION_FUTURE,
-				$t_description, $p_version->date_order );
+			if ( !$this->debug ) {
+				version_add( $p_version->project_id, $p_version->version, VERSION_FUTURE,
+					$t_description, $p_version->date_order );
+			}
 		}
 		return $p_version;
 	}
