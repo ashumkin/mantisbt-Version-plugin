@@ -55,14 +55,14 @@ class VersionPlugin extends MantisPlugin {
 		return $t_description;
 	}
 
-	protected function release_version($p_version, $p_description_template) {
+	protected function release_version($p_version, $p_date, $p_description_template) {
 		// do not modify version if it is already released
 		if ( $p_version->released == VERSION_RELEASED ) {
 			echo 'Version '.$p_version->version." already released\n";
 			return;
 		}
 		$p_version->released = VERSION_RELEASED;
-		$p_version->date_order = time();
+		$p_version->date_order = $p_date ? $p_date : time();
 		// check whether version description matches our template or not
 		$t_description = $this->process_description( $p_description_template, $p_version, false );
 		// if matches
@@ -70,6 +70,7 @@ class VersionPlugin extends MantisPlugin {
 			// replace it by template
 			$p_version->description = $this->process_description( $p_description_template, $p_version, true );
 		}
+		echo 'Releasing version ' . $p_version->version . ' at ' . strftime( '%Y-%d-%m %H:%M:%S', $p_version->date_order ) . "\n";
 		if ( !$this->debug ) {
 			version_update( $p_version );
 		}
@@ -112,7 +113,7 @@ class VersionPlugin extends MantisPlugin {
 		}
 	}
 
-	public function release_inc_version($p_event, $p_version, $p_debug) {
+	public function release_inc_version($p_event, $p_version, $p_date, $p_debug) {
 		$t_version = $p_version->version;
 		$t_version_next = $this->get_next_by_name( $t_version );
 		if ( $this->debug = $p_debug ) {
@@ -127,7 +128,7 @@ class VersionPlugin extends MantisPlugin {
 			}
 			// release version only if next does not exist
 			$t_description = plugin_config_get( 'description_template' );
-			$this->release_version( $p_version, $t_description );
+			$this->release_version( $p_version, $p_date, $t_description );
 
 			$p_version->version = $t_version_next;
 			$p_version->date_order = time() + 24 * 60 * 60 * plugin_config_get( 'increment_date_by_days' );
